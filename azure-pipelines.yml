@@ -4,7 +4,7 @@ trigger:
       - main
 
 variables:
-  environment: 'dev'
+  environment: 'prod'
 
 stages:
   - stage: Terraform
