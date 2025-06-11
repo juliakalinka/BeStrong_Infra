@@ -38,7 +38,7 @@ stages:
           backendServiceArm: 'bestrong-arm'
           backendAzureRmStorageAccountName: 'tfstatestoragebestrong'
           backendAzureRmContainerName: 'tfstate'
-          backendAzureRmKey: 'terraform.tfstateenv:$(environment)'
+          backendAzureRmKey: 'tfstate'
         displayName: 'Terraform init'
 
       - task: TerraformTask@5
