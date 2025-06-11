@@ -35,6 +35,7 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'init'
+          backendAzureRmUseEntraIdForAuthentication: false
           backendServiceArm: 'bestrong-arm'
           backendAzureRmStorageAccountName: 'tfstatestoragebestrong'
           backendAzureRmContainerName: 'tfstate'
