@@ -30,38 +30,40 @@ stages:
       - task: TerraformInstaller@1
         inputs:
           terraformVersion: '1.6.6' 
+      - script: |
+          echo "Client ID: $(TerraformClientId)"
+          echo "Tenant ID: $(TerraformTenantId)"
+          echo "Client Secret Length: ${#TerraformClientSecret}"
+        displayName: 'Verify secret values (masked)'
+
 
       - task: TerraformTask@5
         inputs:
           provider: 'azurerm'
           command: 'init'
-          backendServiceArm: 'bestrong-arm'
+          backendAzureRmUseEntraIdForAuthentication: false
+          backendServiceArm: 'Subscription(52ecb237-db48-4ae0-b22c-9fc43dd0742a)'
           backendAzureRmStorageAccountName: 'tfstatestoragebestrong'
           backendAzureRmContainerName: 'tfstate'
           backendAzureRmKey: 'tfstate'
-        displayName: 'Terraform init'
 
-      - task: TerraformTask@5
-        inputs:
-          provider: 'azurerm'
-          command: 'custom'
-          outputTo: 'console'
-          customCommand: 'terraform workspace select $(environment)'
-          environmentServiceNameAzureRM: 'bestrong-arm'
-        displayName: 'Terrafrom workspace select'
+
+      - script: |
+          terraform workspace select $(environment) || terraform workspace new $(environment)
+        displayName: 'Select or create terraform workspace'
           
       - task: TerraformTask@5
         inputs:
           provider: 'azurerm'
           command: 'plan'
-          commandOptions: '-var-file="env/$(environment).tfvars"'
-          environmentServiceNameAzureRM: 'bestrong-arm'
+          commandOptions: '-var-file="env/$(environment)/terraform.tfvars"'
+          environmentServiceNameAzureRM: 'Subscription(52ecb237-db48-4ae0-b22c-9fc43dd0742a)'
         displayName: 'Terraform plan'
       
       - task: TerraformTask@5
         inputs:
           provider: 'azurerm'
           command: 'apply'
-          commandOptions: '-var-file="env/$(environment).tfvars"'
-          environmentServiceNameAzureRM: 'bestrong-arm'
+          commandOptions: '-var-file="env/$(environment)/terraform.tfvars"'
+          environmentServiceNameAzureRM: 'Subscription(52ecb237-db48-4ae0-b22c-9fc43dd0742a)'
         displayName: 'Terraform apply'
