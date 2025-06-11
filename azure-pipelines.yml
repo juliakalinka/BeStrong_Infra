@@ -20,6 +20,12 @@ stages:
           KeyVaultName: 'newbestrongkeyvault'
           SecretsFilter: 'TerraformClientId,TerraformTenantId,TerraformClientSecret,TerraformSubscriptionId'
           RunAsPreJob: true
+      - script: |
+          echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$(TerraformClientId)"
+          echo "##vso[task.setvariable variable=ARM_TENANT_ID]$(TerraformTenantId)"
+          echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$(TerraformClientSecret)"
+          echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$(TerraformSubscriptionId)"
+        displayName: 'Set Terraform environment variables'
 
       - task: TerraformInstaller@1
         inputs:
@@ -33,6 +39,7 @@ stages:
           backendAzureRmStorageAccountName: 'tfstatestoragebestrong'
           backendAzureRmContainerName: 'tfstate'
           backendAzureRmKey: 'terraform.tfstateenv:$(environment)'
+        displayName: 'Terraform init'
 
       - task: TerraformTask@5
         inputs:
@@ -41,6 +48,7 @@ stages:
           outputTo: 'console'
           customCommand: 'terraform workspace select $(environment)'
           environmentServiceNameAzureRM: 'bestrong-arm'
+        displayName: 'Terrafrom workspace select'
           
       - task: TerraformTask@5
         inputs:
@@ -48,6 +56,7 @@ stages:
           command: 'plan'
           commandOptions: '-var-file="env/$(environment).tfvars"'
           environmentServiceNameAzureRM: 'bestrong-arm'
+        displayName: 'Terraform plan'
       
       - task: TerraformTask@5
         inputs:
@@ -55,3 +64,4 @@ stages:
           command: 'apply'
           commandOptions: '-var-file="env/$(environment).tfvars"'
           environmentServiceNameAzureRM: 'bestrong-arm'
+        displayName: 'Terraform apply'
