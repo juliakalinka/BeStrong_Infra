@@ -56,7 +56,7 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'plan'
-          commandOptions: '-var-file="env/$(environment).tfvars"'
+          commandOptions: '-var-file="env/$(environment)/terraform.tfvars"'
           environmentServiceNameAzureRM: 'Subscription(52ecb237-db48-4ae0-b22c-9fc43dd0742a)'
         displayName: 'Terraform plan'
       
@@ -64,6 +64,6 @@ stages:
         inputs:
           provider: 'azurerm'
           command: 'apply'
-          commandOptions: '-var-file="env/$(environment).tfvars"'
+          commandOptions: '-var-file="env/$(environment)/terraform.tfvars"'
           environmentServiceNameAzureRM: 'Subscription(52ecb237-db48-4ae0-b22c-9fc43dd0742a)'
         displayName: 'Terraform apply'
