@@ -36,7 +36,7 @@ resource "azurerm_cognitive_account" "form_recognizer" {
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
   kind                = "FormRecognizer"
-  sku_name            = "F0"
+  sku_name            = var.ai_sku
 }
 
 resource "azurerm_app_service_plan" "main" {

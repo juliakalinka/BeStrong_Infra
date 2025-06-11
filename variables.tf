@@ -21,6 +21,10 @@ variable "app_service_plan_name" {
 variable "function_app_name" {
   default = "bestrongfuncapp"
 }
+
+variable "ai_sku" {
+  default = "F0"
+}
 # variable "client_id" {}
 
 # variable "client_secret" {}
