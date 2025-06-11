@@ -45,7 +45,7 @@ stages:
             -backend-config=storage_account_name=tfstatestoragebestrong
             -backend-config=container_name=tfstate
             -backend-config=key=tfstate
-          environmentServiceNameAzureRM: '' # Leave this empty or remove
+
 
 
       - task: TerraformTask@5
