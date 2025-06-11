@@ -17,7 +17,7 @@ stages:
       - task: AzureKeyVault@2
         inputs:
           azureSubscription: 'bestrong-arm'
-          KeyVaultName: 'newbestrongkeyvault1'
+          KeyVaultName: 'bestrongkeyvault1'
           SecretsFilter: 'TerraformClientId,TerraformTenantId,TerraformClientSecret,TerraformSubscriptionId'
           RunAsPreJob: true
       - script: |
