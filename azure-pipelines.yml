@@ -18,7 +18,7 @@ stages:
         inputs:
           azureSubscription: 'bestrong-arm'
           KeyVaultName: 'newbestrongkeyvault'
-          SecretsFilter: 'TerraformClientId,TenantId,TenantSecret,SubscriptionId'
+          SecretsFilter: 'TerraformClientId,TerraformTenantId,TerraformClientSecret,TerraformSubscriptionId'
           RunAsPreJob: true
 
       - task: TerraformInstaller@1
