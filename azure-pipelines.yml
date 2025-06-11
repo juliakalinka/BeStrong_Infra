@@ -36,16 +36,14 @@ stages:
           echo "Client Secret Length: ${#TerraformClientSecret}"
         displayName: 'Verify secret values (masked)'
 
+
       - task: TerraformTask@5
         inputs:
           provider: 'azurerm'
           command: 'init'
-          commandOptions: >
-            -backend-config=resource_group_name=rg-terraform-state
-            -backend-config=storage_account_name=tfstatestoragebestrong
-            -backend-config=container_name=tfstate
-            -backend-config=key=tfstate
-
+          commandOptions: '-backend-config=resource_group_name=rg-terraform-state -backend-config=storage_account_name=tfstatestoragebestrong -backend-config=container_name=tfstate -backend-config=key=tfstate'
+          backendAzureRmUseEntraIdForAuthentication: false
+          backendServiceArm: 'Subscription(52ecb237-db48-4ae0-b22c-9fc43dd0742a)'
 
 
       - task: TerraformTask@5
