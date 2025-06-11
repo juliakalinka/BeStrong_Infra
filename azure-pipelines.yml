@@ -48,14 +48,9 @@ stages:
           backendAzureRmKey: 'tfstate'
 
 
-      - task: TerraformTask@5
-        inputs:
-          provider: 'azurerm'
-          command: 'custom'
-          outputTo: 'console'
-          customCommand: 'terraform workspace select $(environment)'
-          environmentServiceNameAzureRM: 'bestrong-arm'
-        displayName: 'Terrafrom workspace select'
+      - script: |
+          terraform workspace select $(environment) || terraform workspace new $(environment)
+        displayName: 'Select or create terraform workspace'
           
       - task: TerraformTask@5
         inputs:
