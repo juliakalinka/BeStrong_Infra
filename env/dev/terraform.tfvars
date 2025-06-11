@@ -1,4 +1,6 @@
 resource_group_name  = "rg-dev"
 location             = "westeurope"
-storage_account_name = "devstorageacct"
+storage_account_name = "devstorageacctbestrong"
 ai_account_name      = "devformai"
+app_service_plan_name = "devbestrongplan"
+function_app_name = "devbestrongfuncapp"

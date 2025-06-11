@@ -1,4 +1,6 @@
 resource_group_name  = "rg-prod"
 location             = "westeurope"
-storage_account_name = "prodstorageacct"
+storage_account_name = "prodstorageacctbestrong"
 ai_account_name      = "prodformai"
+app_service_plan_name = "prodbestrongplan"
+function_app_name = "prodbestrongfuncapp"
