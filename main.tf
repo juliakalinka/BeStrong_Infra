@@ -39,38 +39,38 @@ resource "azurerm_cognitive_account" "form_recognizer" {
   sku_name            = var.ai_sku
 }
 
-resource "azurerm_app_service_plan" "main" {
+resource "azurerm_service_plan" "main" {
   name                = var.app_service_plan_name
   location            = azurerm_resource_group.main.location
   resource_group_name = azurerm_resource_group.main.name
-  kind                = "FunctionApp"
-  reserved            = true
-
-  sku {
-    tier = "Dynamic"
-    size = "Y1"
-  }
+  os_type             = "Linux"
+  sku_name            = "Y1"
 }
 
-resource "azurerm_function_app" "bestrong_app" {
-  name                       = var.function_app_name
-  location                   = azurerm_resource_group.main.location
-  resource_group_name        = azurerm_resource_group.main.name
-  app_service_plan_id        = azurerm_app_service_plan.main.id
+resource "azurerm_linux_function_app" "bestrong_app" {
+  name                = var.function_app_name
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+  service_plan_id     = azurerm_service_plan.main.id
+  
   storage_account_name       = azurerm_storage_account.main.name
   storage_account_access_key = azurerm_storage_account.main.primary_access_key
 
-  version                    = "~4"
-  os_type                    = "linux"
+  functions_extension_version = "~4"
+  
+  site_config {
+    application_stack {
+      python_version = "3.9"
+    }
+  }
 
   app_settings = {
     "FUNCTIONS_WORKER_RUNTIME"      = "python"
-    "WEBSITE_RUN_FROM_PACKAGE"     = "1"
-    "FileShareConnectionString"    = ""
-    "FormRecognizerEndpoint"       = ""
-    "FormRecognizerKey"            = ""
-    "BlobStorageConnectionString"  = ""
-    "DiscordWebhookUrl"            = ""
-    "SlackWebhookUrl"              = ""
+    "FileShareConnectionString"     = ""
+    "FormRecognizerEndpoint"        = ""
+    "FormRecognizerKey"             = ""
+    "BlobStorageConnectionString"   = ""
+    "DiscordWebhookUrl"             = ""
+    "SlackWebhookUrl"               = ""
   }
 }
