@@ -61,13 +61,9 @@ resource "azurerm_function_app" "bestrong_app" {
   version                    = "~4"
   os_type                    = "linux"
 
-  site_config {
-    linux_fx_version = "Python|3.9"
-  }
-
   app_settings = {
-    "FUNCTIONS_WORKER_RUNTIME" = "python"
-    "WEBSITE_RUN_FROM_PACKAGE" = "1"
+    "FUNCTIONS_WORKER_RUNTIME"      = "python"
+    "WEBSITE_RUN_FROM_PACKAGE"     = "1"
     "FileShareConnectionString"    = ""
     "FormRecognizerEndpoint"       = ""
     "FormRecognizerKey"            = ""
